@@ -18,7 +18,7 @@ resource "aws_db_instance" "default" {
   backup_retention_period = 0
   storage_encrypted       = false
   skip_final_snapshot     = true
-  monitoring_interval     = 0
+  monitoring_interval     = true
   publicly_accessible     = true
 
   tags = merge({
@@ -39,6 +39,10 @@ resource "aws_db_instance" "default" {
   lifecycle {
     ignore_changes = ["password"]
   }
+  deletion_protection = true
+  performance_insights_kms_key_id = "CKV_ANY"
+  auto_minor_version_upgrade = true
+  iam_database_authentication_enabled = true
 }
 
 resource "aws_db_option_group" "default" {
